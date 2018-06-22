@@ -196,8 +196,9 @@ func appointinfo(parm string)(interface{},error){
 
 func allinfo() ([]map[string]string,error) {
 	vals := []map[string]string{}
-	for i := 1; i < len(Parm); i++ {
-		rc := redisClient(Parm[0], Parm[i])
+	for i := 0; i < len(Parm); i++ {
+		rc := redisClient(checkIp(Parm[i]))
+		defer rc.Close()
 		info := rc.Info()
 		value, err := info.Result()
 		if err != nil {
@@ -217,14 +218,28 @@ func allinfo() ([]map[string]string,error) {
 	return vals,nil
 }
 
-func redisClient(auth, host string) *redis.Client {
-	client := redis.NewClient(&redis.Options{
-		Addr:     host,
-		Password: auth,
-	})
+func checkIp(ip string)string{
+	if strings.Contains(ip,":"){
+		return ip
+	}
+	return ip + ":6379"
+}
+
+func redisClient(host string) *redis.Client {
+	client := &redis.Client{}
+	if Secret != ""{
+		client = redis.NewClient(&redis.Options{
+			Addr:     host,
+			Password: Secret,
+		})
+	}else{
+		client = redis.NewClient(&redis.Options{
+			Addr:     host,
+		})
+	}
 	_, err := client.Ping().Result()
 	if err != nil {
-		fmt.Println("redis ping err:%s \n", err)
+		fmt.Println("redis ping err ", err)
 	}
 	return client
 }

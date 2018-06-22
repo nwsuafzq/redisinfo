@@ -6,6 +6,7 @@ import (
 )
 
 var Parm []string
+var Secret string
 
 func GetAllInfo(c *gin.Context) {
 	value,err := allinfo()

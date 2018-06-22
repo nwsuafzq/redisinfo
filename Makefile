@@ -1,5 +1,5 @@
 FILES:=$(shell find . -name '*.go' | grep -v -E '(./vendor)')
-BIN=redisinfo
+BIN=redis-stat
 all: \
 	bin/darwin/$(BIN) \
 	bin/linux/$(BIN) 
