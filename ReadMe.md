@@ -31,7 +31,7 @@
 **Keyspace** 获取Keyspace信息
 
 
-**docker run -p <宿主端口号>:10012 <镜像名称>:<版本Tag> --server ":10012" --auth "" ip1,ip2...ipn**
+**docker run -p <宿主端口号>:10012 <镜像名称>:<版本Tag> --server "10012" --auth "" ip1,ip2...ipn**
 
 **注：--server ":10012" 为服务的端口号，不填默认为10012**
 
