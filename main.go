@@ -7,8 +7,10 @@ import (
 	"time"
 	"fmt"
 	"flag"
+	"os"
+	"regexp"
 )
-
+const CORRECTIP = "((25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))\\.){3}(25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))"
 var serverPort string = ":"
 
 func init(){
@@ -17,8 +19,18 @@ func init(){
 	flag.Parse()
 	info.Parm = flag.Args()
 	if len(info.Parm) < 1{
-		panic("Please input Ip")
+		fmt.Println("Missing Param ... \nParam list is -server -auth ip1(10.0.0.1),ip2, ...,ipn\n" +
+			"Get Most information please read ReadMe")
+		os.Exit(1)
 	}
+	for _,addr := range info.Parm{
+		tIp, _ := regexp.MatchString(CORRECTIP, addr)
+		if !tIp{
+			fmt.Println("input Ip is not correct IP ",addr)
+			os.Exit(1)
+		}
+	}
+
 	info.Secret = *auth
 	serverPort += *port
 	fmt.Println("serverPort is ",serverPort)
@@ -46,3 +58,4 @@ func handle() (router *gin.Engine) {
 	router.GET("/metrics/:info", info.GetAppointInfo)
 	return
 }
+
