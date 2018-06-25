@@ -14,13 +14,13 @@ const CORRECTIP = "((25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))\\.){3}(25[0-5]|2
 var serverPort string = ":"
 
 func init(){
-	port := flag.String("server","10012","input your port")
-	auth := flag.String("auth","","input your auth")
+	port := flag.String("server","10012","binding port")
+	auth := flag.String("auth","","redis password")
 	flag.Parse()
 	info.Parm = flag.Args()
 	if len(info.Parm) < 1{
-		fmt.Println("Missing Param ... \nParam list is -server -auth ip1(10.0.0.1),ip2, ...,ipn\n" +
-			"Get Most information please read ReadMe")
+		fmt.Printf("usage: %s [options] HOST[:PORT]...\n",os.Args[0])
+		flag.PrintDefaults()
 		os.Exit(1)
 	}
 	for _,addr := range info.Parm{
