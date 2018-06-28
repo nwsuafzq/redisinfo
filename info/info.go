@@ -20,7 +20,7 @@ func GetAllInfo(c *gin.Context) {
 
 func GetAppointInfo(c *gin.Context){
 	parm := c.Param("info")
-	value,err := appointinfo(parm)
+	value,err := oppointinfo(parm)
 	if err != nil{
 		c.JSON(http.StatusAccepted, gin.H{"status": -1, "metrics": err})
 		return
