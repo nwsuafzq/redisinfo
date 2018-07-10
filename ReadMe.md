@@ -1,5 +1,5 @@
 
-### 镜像上传API和版本
+### Redis信息获取API和版本
 
 本程序为前端页面提供镜像上传RESTful API。
 镜像上传API版本v1。
